@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, throwError} from 'rxjs';
-import { map, catchError, flatMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { Category } from './category.model';
 
@@ -18,7 +18,7 @@ export class CategoryService {
   getAll(): Observable<Category[]> {
     return this.http.get(this.apiPath).pipe(
       catchError(this.handleError),
-      map(this.jsonDataToCategory)
+      map(this.jsonDataToCategories)  // Corrigido para plural
     );
   }
 
@@ -26,7 +26,7 @@ export class CategoryService {
     const url = `${this.apiPath}/${id}`;
     return this.http.get(url).pipe(
       catchError(this.handleError),
-      map(this.jsonDataToCategorySingle) // Alteração para um método específico
+      map(this.jsonDataToCategorySingle)  // Mapeia para uma categoria
     );
   }
 
@@ -34,24 +34,21 @@ export class CategoryService {
     return new Category(jsonData.id, jsonData.name, jsonData.description);
   }
 
-
   create(category: Category): Observable<Category> {
     return this.http.post(this.apiPath, category).pipe(
       catchError(this.handleError),
-      map(this.jsonDataToCategorySingle) // Aqui também, retorna uma única categoria
+      map(this.jsonDataToCategorySingle)  // Retorna uma única categoria
     );
   }
-
 
   update(category: Category): Observable<Category> {
     const url = `${this.apiPath}/${category.id}`;
 
     return this.http.patch(url, category).pipe(
       catchError(this.handleError),
-      map(() => category)
+      map(this.jsonDataToCategorySingle)  // Atualiza e mapeia a resposta da API
     );
   }
-
 
   delete(id: number): Observable<any> {
     const url = `${this.apiPath}/${id}`;
@@ -61,23 +58,24 @@ export class CategoryService {
     );
   }
 
-
-
-  private jsonDataToCategory(jsonData: any[]): Category[] {
+  private jsonDataToCategories(jsonData: any[]): Category[] {
     const categories: Category[] = [];
-    jsonData.forEach(element => {
-      const category = new Category(element.id, element.name, element.description);
-      categories.push(category);
-    });
+    if (Array.isArray(jsonData)) {
+      jsonData.forEach(element => {
+        const category = new Category(element.id, element.name, element.description);
+        categories.push(category);
+      });
+    }
     return categories;
   }
 
   private handleError(error: any): Observable<any> {
-    console.log('ERRO NA REQUISIÇÃO =>', error);
+    console.error('Erro na requisição:', error);
+    if (error.error instanceof ErrorEvent) {
+      console.error('Erro no lado do cliente:', error.error.message);
+    } else {
+      console.error(`Erro no servidor: ${error.status}\nMensagem: ${error.message}`);
+    }
     return throwError(error);
   }
-
-
 }
-
-

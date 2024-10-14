@@ -6,10 +6,9 @@
   </ol>
 </nav>
 
-
 <div class="row mb-4">
   <div class="col-md">
-    <h1 class=" h2  p-2">Formulario</h1>
+    <h1 class="h2 p-2">Formulario</h1>
   </div>
   <div class="col-md">
     <a class="btn btn-primary float-right" routerLink="/categories">
@@ -18,37 +17,42 @@
   </div>
 </div>
 
-
-<form formGroup = "categoryForm" (submit)="submitForm()">
-
+<form [formGroup]="categoryForm" (ngSubmit)="submitForm()">
   <div class="card">
     <div class="card-body">
       <div class="form-row">
 
+        <!-- Campo Nome -->
         <div class="form-group col-md-6">
           <label for="name">Nome</label>
           <input type="text" class="form-control" id="name" formControlName="name">
 
-          <div class = "text-danger" *ngIf="categoryForm.get('name').touched && categoryForm.get('name').errors">
-            <div *ngIf="categoryForm.get('name').errors.required">dado obrigatório</div>
-            <div *ngIf="categoryForm.get('name').errors.minlength">dado muito curto</div>
-            <div *ngIf="categoryForm.get('name').errors.maxlength">dado muito longo</div>
-
+          <div class="text-danger" *ngIf="categoryForm.get('name').touched && categoryForm.get('name').invalid">
+            <div *ngIf="categoryForm.get('name')?.errors?.required">dado obrigatório</div>
+            <div *ngIf="categoryForm.get('name')?.errors?.minlength">dado muito curto</div>
+            <div *ngIf="categoryForm.get('name')?.errors?.maxlength">dado muito longo</div>
           </div>
         </div>
 
+        <!-- Campo Descrição -->
         <div class="form-group col-md-6">
-          <label for="description">Descricão</label>
+          <label for="description">Descrição</label>
           <input type="text" class="form-control" id="description" formControlName="description">
         </div>
 
       </div>
-      <button disabled ="submittingForm || !categoryForm.valid" type="submit" class="btn btn-primary">
+
+      <div class="alert alert-danger" role="alert" *ngIf="serverErrorMessages">
+        <strong>Erro:</strong>
+        <ul>
+          <li *ngFor="let message of serverErrorMessages">{{ message }}</li>
+        </ul>
+      </div>
+
+      <!-- Botão Salvar -->
+      <button [disabled]="submittingForm || categoryForm.invalid" type="submit" class="btn btn-primary">
         Salvar
       </button>
     </div>
-
   </div>
-
-
 </form>

@@ -1,0 +1,68 @@
+
+
+<strong class="text-danger h4 ">NÃO FINALIZADO</strong>
+
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+    <li class="breadcrumb-item active"><a routerLink="/entries"> Lançamentos</a></li>
+    <li class="breadcrumb-item active">Formulario</li>
+  </ol>
+</nav>
+
+<div class="row mb-4">
+  <div class="col-md">
+    <h1 class="h2 p-2">Formulario</h1>
+  </div>
+  <div class="col-md">
+    <a class="btn btn-primary float-right" routerLink="/lançamentos">
+      Voltar
+    </a>
+  </div>
+</div>
+
+<form [formGroup]="entryForm" (ngSubmit)="submitForm()">
+  <div class="card">
+    <div class="card-body">
+      <div class="form-row">
+
+        <!-- Campo Nome -->
+        <div class="form-group col-md-6">
+          <label for="name">Nome</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+
+
+          <select name="type" id="type" formControlName="type" class="form-control">
+            <option value="revenue">Receita</option>
+            <option value="expense">Despesa</option>
+          </select>
+
+          <div class="text-danger" *ngIf="entryForm.get('name').touched && entryForm.get('name').invalid">
+            <div *ngIf="entryForm.get('name')?.errors?.required">dado obrigatório</div>
+            <div *ngIf="entryForm.get('name')?.errors?.minlength">dado muito curto</div>
+            <div *ngIf="entryForm.get('name')?.errors?.maxlength">dado muito longo</div>
+          </div>
+        </div>
+
+        <!-- Campo Descrição -->
+        <div class="form-group col-md-6">
+          <label for="description">Descrição</label>
+          <input type="text" class="form-control" id="description" formControlName="description">
+        </div>
+
+      </div>
+
+      <div class="alert alert-danger" role="alert" *ngIf="serverErrorMessages">
+        <strong>Erro:</strong>
+        <ul>
+          <li *ngFor="let message of serverErrorMessages">{{ message }}</li>
+        </ul>
+      </div>
+
+      <!-- Botão Salvar -->
+      <button [disabled]="submittingForm || entryForm.invalid" type="submit" class="btn btn-primary">
+        Salvar
+      </button>
+    </div>
+  </div>
+</form>

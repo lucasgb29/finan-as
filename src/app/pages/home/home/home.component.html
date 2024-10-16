@@ -1,0 +1,77 @@
+<app-page-header
+  page-title="Home"
+  [show-button]="false"
+></app-page-header>
+
+<!-- Mensagem de boas-vindas -->
+<div class="jumbotron text-center mt-4">
+  <h1 class="display-4">Bem-vindo ao <strong>Finansys</strong></h1>
+  <p class="lead">Gerencie suas finanças de forma simples e eficiente.</p>
+  <hr class="my-4">
+  <p>Comece a organizar suas despesas e receitas agora mesmo!</p>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <!-- Card Relatórios -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-chart-line fa-3x mb-3"></i>
+          <h5 class="card-title">Relatórios</h5>
+          <p class="card-text">Crie e baixe relatórios</p>
+          <a href="reports" class="btn btn-outline-success">Abrir</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Lançamentos -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-coins fa-3x mb-3"></i>
+          <h5 class="card-title">Lançamentos</h5>
+          <p class="card-text">Organize suas receitas e despesas</p>
+          <a href="entries" class="btn btn-outline-success">Abrir</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Categorias -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-money-bill-wave fa-3x mb-3"></i>
+          <h5 class="card-title">Categorias</h5>
+          <p class="card-text">Categorize suas despesas e receitas</p>
+          <a href="categories" class="btn btn-outline-success">Abrir</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Sobre o Projeto -->
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card text-center">
+        <div class="card-header">
+          Sobre o Projeto
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Finansys - Projeto Educativo</h5>
+          <p class="card-text">
+            O Finansys foi desenvolvido com o propósito educativo de praticar a criação de aplicações web utilizando Angular e Bootstrap.
+          </p>
+          <p class="card-text">
+            Criado por <strong>Lucas Gomes Bernardino</strong>.
+          </p>
+          <!-- Opcional: Adicione um botão para o GitHub ou LinkedIn -->
+        
+        </div>
+        <div class="card-footer text-muted">
+          © 2023 Lucas Gomes Bernardino
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
